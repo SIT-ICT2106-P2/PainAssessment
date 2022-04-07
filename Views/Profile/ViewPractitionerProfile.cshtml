@@ -13,7 +13,7 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.FullName)</div>
+        <div class="col-lg-2">User Name</div>
         <div class="col-lg-10">
             @Html.TextBoxFor(model => model.FullName, new { disabled = "disabled", @readonly = "readonly" })
         </div>
@@ -47,4 +47,17 @@
         </div>
     </div>
 
+    <br/>
+
+    <div class="col-md-6">
+        <a href = "EditProfile">
+            <button type="button" class="btn btn-info col-md-6" value="Update"> Update Username </button>
+        </a>
+    </div>
+    </br>
+
+    <div class="col-md-6">
+        <a href = "UpdatePassword"><button type="button" class="btn btn-info col-md-6"
+        value="UpdatePwd"> Update Password </button></a>
+    </div>
 </div>

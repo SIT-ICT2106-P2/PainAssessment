@@ -10,7 +10,7 @@
 <div style="margin-top: 40px">
     <div class="row justify-content-between">
         <div class="col-sm-6">
-            <h2>Template Checklist 1</h2>
+            <h2>@Model.ChecklistName</h2>
         </div>
     </div>
 </div>
@@ -47,42 +47,72 @@
                     <thead>
                         <tr>
                             <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model.Central)
-                        {
+                        @{var i = 1;
+                            if(Model.Central.Count != 0)
+                            {
 
-                            <tr id="row_@item.RowId">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RowId)
-                                </td>
-                                <td>
-                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
+                                @foreach(var item in Model.Central)
+                                {
 
-                                </td>
-                                <td>
-                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
+                                    <tr id="row_@item.RowId">
+                                        <form>
 
-                                </td>
-                                <td>
-                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.MaxValue').val())"
-                                            type="button"
-                                            class="btn btn-primary btn-sm">
-                                        Update
-                                    </button>
-                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
-                                            type="button"
-                                            class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+
+                                        <td>
+                                            @i
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="0" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button type="submit"
+                                                    asp-action="UpdateQuestion"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    i++;
+                                }
+                            }
                         }
-
                     </tbody>
                 </table>
                 <button onclick="AddQuestion(@Model.Central.Count(), 0)"
@@ -93,7 +123,7 @@
             </div>
         </div>
 
-        
+
         <!-- Accordion card -->
         <div class="card">
             <!-- Card header -->
@@ -124,40 +154,67 @@
                     <thead>
                         <tr>
                             <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model.Regional)
-                        {
+                        @{var j = 1;
+                            if(Model.Regional.Count() != 0)
+                            {
+                                @foreach(var item in Model.Regional)
+                                {
 
-                            <tr id="row_@item.RowId">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RowId)
-                                </td>
-                                <td>
-                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
+                                    <tr id="row_@item.RowId">
+                                        <form>
 
-                                </td>
-                                <td>
-                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
 
-                                </td>
-                                <td>
-                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
-                                            type="button"
-                                            class="btn btn-primary btn-sm">
-                                        Update
-                                    </button>
-                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
-                                            type="button"
-                                            class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+                                        <td>
+                                            @j
+                                            <div class="form-group">
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="1" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    j++;
+                                }
+                            }
                         }
 
                     </tbody>
@@ -202,42 +259,70 @@
                     <thead>
                         <tr>
                             <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
                             <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model.Local)
-                        {
+                        @{var k = 1;
+                            if(Model.Local.Count() != 0)
+                            {
 
-                            <tr id="row_@item.RowId">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.RowId)
-                                </td>
-                                <td>
-                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
+                                @foreach(var item in Model.Local)
+                                {
 
-                                </td>
-                                <td>
-                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
+                                    <tr id="row_@item.RowId">
+                                        <form>
+                                        <td>
+                                            @k
+                                            <div class="form-group">
 
-                                </td>
-                                <td>
-                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
-                                            type="button"
-                                            class="btn btn-primary btn-sm">
-                                        Update
-                                    </button>
-                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
-                                            type="button"
-                                            class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="2" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    k++;
+                                }
+                            }
                         }
-
                     </tbody>
                 </table>
                 <button onclick="AddQuestion(@Model.Local.Count(), 2)"
@@ -247,6 +332,12 @@
                 </button>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="padding-top: 30px">
+        <a class="btn btn-danger border border-dark" style="float:right;" asp-action="ViewTemplateChecklist">Back</a>
     </div>
 </div>
 
@@ -292,7 +383,7 @@
 
 
 <div class="modal fade" id="creationModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create new Question</h5>
@@ -300,29 +391,49 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div>
-                <table>
-                    <tr id=("row_1")>
-                        <td id="new_DQID" class="col-sm-1">
-                        </td>
-                        <td class="col-sm-1">
-                            <input type="text" id="new_qString" name="new_qString" placeholder="Input question here" value="">
+            <div class="modal-body table">
+                <form asp-action="AddQuestion">
+                    <div>
+                        <table>
+                            <tr id=("row_1")>
+                                <td id="new_DQID" class="col-sm-1">
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
 
-                        </td>
-                        <td class="col-sm-1">
-                            <input type="number" id="new_weightage" name="new_weightage" placeholder="Input weightage" value="">
+                                        <input type="text" id="new_qSubDomain" name="new_sub_domain" placeholder="Input sub domain here" value="">
+                                    </div>
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
 
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="new_section" />
-                <button onclick="AddQuestionToDB($('#new_DQID').html(), $('#new_qString').val(), $('#new_section').val(), $('#new_weightage').val())"
-                        type="button"
-                        class="btn btn-primary btn-sm">
-                    Add Question
-                </button>
+                                        <input type="text" id="new_qString" name="new_determinant" placeholder="Input question here" value="">
+                                    </div>
+
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
+
+                                        <input type="number" id="new_weightage" name="new_max_weightage" placeholder="Input max weightage" value="">
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="new_section" name="domain" />
+                        <input type="hidden" name="checklistID" value="@Model.ChecklistId" />
+                    </div>
+                    <div class="form-group">
+
+                        <button type="submit"
+                                class="btn btn-primary btn-sm">
+                            Add Question
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -331,29 +442,6 @@
 
 @section scripts{
     <script>
-        var UpdateQuestion = function (DQID, QString, weightage) {
-            $.ajax({
-                type: "POST",
-                url: "UpdateQuestion",
-                data: { DQID: DQID, QString: QString, weightage: weightage },
-                success: function (result) {
-                    $("#updatedQuestion").text(QString);
-                    $("#updateModal").modal("show");
-                }
-            })
-        }
-
-        var AddQuestionToDB = function (DQID, QString, PainSection, weightage) {
-            $.ajax({
-                type: "POST",
-                url: "AddQuestion",
-                data: { DQID: DQID, QString: QString, PainSection: PainSection, weightage: weightage },
-                success: function (result) {
-                    location.reload();
-                }
-            })
-        }
-
         var DeleteQuestionFromDB = function (DQID) {
             console.log(DQID)
             $.ajax({

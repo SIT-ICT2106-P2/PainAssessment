@@ -62,7 +62,7 @@ namespace PainAssessment.Controllers
                     {
                         var account = accountService.GetAccount(accId);
                         account.FirstSignIn = false;
-                        loginService.setFirstSignInFalse(account);
+                        loginService.SetFirstSignInFalse(account);
                         return RedirectToAction(FIRSTSIGNIN_ACTN);
                     }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);

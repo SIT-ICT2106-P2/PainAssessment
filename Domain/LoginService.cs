@@ -31,7 +31,7 @@ namespace PainAssessment.Domain
             {
                 Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(userAcc.AccountId);
 
-                myUser.setProperty(user.AccountId, user.Role);
+                myUser.SetProperty(user.AccountId, user.Role);
 
                 return myUser;
             }
@@ -100,7 +100,7 @@ namespace PainAssessment.Domain
         /**
          * Update firstSignIn field
          */
-        public void setFirstSignInFalse(Account account)
+        public void SetFirstSignInFalse(Account account)
         {
             _unitOfWork.AccountRepository.Update(account);
             _unitOfWork.Save();

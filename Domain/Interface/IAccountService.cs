@@ -11,5 +11,6 @@ namespace PainAssessment.Interfaces
         void UpdatePassword(Account account);
         void CreateAcc(Account account);
         bool CheckUsername(string username);
+        void UpdateAccountStatus(Account account);
     }
 }

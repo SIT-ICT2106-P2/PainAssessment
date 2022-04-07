@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PainAssessment.Areas.Admin.Models.ViewModels.Profile;
 using PainAssessment.Models;
 using System.Diagnostics;
 using System.Text.Json;
@@ -25,11 +24,6 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-        public IActionResult ViewAdmin(string data)
-        {
-            AdministratorModel adminViewModel = JsonSerializer.Deserialize<AdministratorModel>(data)!;
-            return View(adminViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

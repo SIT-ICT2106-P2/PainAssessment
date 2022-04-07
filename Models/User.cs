@@ -32,7 +32,7 @@ namespace PainAssessment.Models
         /**
          * Set account id and role to instance
          */
-        public void setProperty(Guid guid, string role)
+        public void SetProperty(Guid guid, string role)
         {
             _Role = role;
             _AccountId = guid;
