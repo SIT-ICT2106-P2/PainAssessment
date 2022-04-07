@@ -1,0 +1,476 @@
+﻿@model PainAssessment.Areas.ModuleTwo.Models.Checklist
+
+@{
+    ViewData["Title"] = "Manage Template Checklist";
+}
+
+<div class="text-center" style="margin-top: 20px">
+    <h1 class="display-4">Template Checklist Questions</h1>
+</div>
+<div style="margin-top: 40px">
+    <div class="row justify-content-between">
+        <div class="col-sm-6">
+            <h2>@Model.ChecklistName</h2>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 20px">
+    <div class="accordion md-accordion accordion-blocks" id="accordionDCL" role="tablist"
+         aria-multiselectable="false">
+        <!-- Accordion card -->
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="cMATableHeading">
+                <!--Options-->
+                <div class="float-left">
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                            data-toggle="collapse" data-parent="#accordionDCL" href="#cMATable" aria-expanded="true"
+                            aria-controls="cMATable">
+                        Expand
+                    </button>
+                </div>
+                <h5 class="mt-1 mb-0">
+                    <span class="ml-3">
+                        Central Modulation Assessment
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+
+        <!-- Card body -->
+        <div id="cMATable" class="collapse" role="tabpanel" aria-labelledby="cMATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var i = 1;
+                            if(Model.Central.Count != 0)
+                            {
+
+                                @foreach(var item in Model.Central)
+                                {
+
+                                    <tr id="row_@item.RowId">
+                                        <form>
+
+
+                                        <td>
+                                            @i
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="0" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button type="submit"
+                                                    asp-action="UpdateQuestion"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Central.Count(), 0)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Accordion card -->
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="rIATableHeading">
+                <!--Options-->
+                <div class="float-left">
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                            data-toggle="collapse" data-parent="#accordionDCL" href="#rIATable" aria-expanded="true"
+                            aria-controls="rIATable">
+                        Expand
+                    </button>
+                </div>
+                <h5 class="mt-1 mb-0">
+                    <span class="ml-3">
+                        Regional Influence Assessment
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+
+        <!-- Card body -->
+        <div id="rIATable" class="collapse" role="tabpanel" aria-labelledby="rIATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var j = 1;
+                            if(Model.Regional.Count() != 0)
+                            {
+                                @foreach(var item in Model.Regional)
+                                {
+
+                                    <tr id="row_@item.RowId">
+                                        <form>
+
+
+                                        <td>
+                                            @j
+                                            <div class="form-group">
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="1" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    j++;
+                                }
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Regional.Count(), 1)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Accordion card -->
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="lSATableHeading">
+                <!--Options-->
+                <div class="float-left">
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                            data-toggle="collapse" data-parent="#accordionDCL" href="#lSATable" aria-expanded="true"
+                            aria-controls="lSATable">
+                        Expand
+                    </button>
+                </div>
+                <h5 class="mt-1 mb-0">
+                    <span class="ml-3">
+                        Local Stimulation Assessment
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+
+        <!-- Card body -->
+        <div id="lSATable" class="collapse" role="tabpanel" aria-labelledby="lSATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Sub Domain<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var k = 1;
+                            if(Model.Local.Count() != 0)
+                            {
+
+                                @foreach(var item in Model.Local)
+                                {
+
+                                    <tr id="row_@item.RowId">
+                                        <form>
+                                        <td>
+                                            @k
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="domain" value="2" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-sm">
+                                                Update
+                                            </button>
+                                            <button asp-action="DeleteQuestion"
+                                                    type="submit"
+                                                    class="btn btn-danger btn-sm">
+                                                Delete
+                                            </button>
+                                        </td>
+                                        </form>
+                                    </tr>
+                                    k++;
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Local.Count(), 2)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="padding-top: 30px">
+        <a class="btn btn-danger border border-dark" style="float:right;" asp-action="ViewTemplateChecklist">Back</a>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Question Updated</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Question "<span id="updatedQuestion"></span>" has been updated!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="deletionModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="deletionDQID" />
+            <div class="modal-body">
+                <p>Are you sure you want to delete the question "<span id="deletingQuestion"></span>"?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                <button type="button" onclick="DeleteQuestionFromDB($('#deletionDQID').val())" class="btn btn-danger">Delete</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="creationModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create new Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body table">
+                <form asp-action="AddQuestion">
+                    <div>
+                        <table>
+                            <tr id=("row_1")>
+                                <td id="new_DQID" class="col-sm-1">
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
+
+                                        <input type="text" id="new_qSubDomain" name="new_sub_domain" placeholder="Input sub domain here" value="">
+                                    </div>
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
+
+                                        <input type="text" id="new_qString" name="new_determinant" placeholder="Input question here" value="">
+                                    </div>
+
+                                </td>
+                                <td class="col-sm-1">
+                                    <div class="form-group">
+
+                                        <input type="number" id="new_weightage" name="new_max_weightage" placeholder="Input max weightage" value="">
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="new_section" name="domain" />
+                        <input type="hidden" name="checklistID" value="@Model.ChecklistId" />
+                    </div>
+                    <div class="form-group">
+
+                        <button type="submit"
+                                class="btn btn-primary btn-sm">
+                            Add Question
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        var DeleteQuestionFromDB = function (DQID) {
+            console.log(DQID)
+            $.ajax({
+                type: "POST",
+                url: "DeleteQuestion",
+                data: { DQID: DQID },
+                success: function (result) {
+                    $("#deletionModal").modal("hide");
+                    $(("#row_" + DQID)).hide();
+                }
+            })
+        }
+
+        var AddQuestion = function (Count, Section) {
+            // Store value of section
+            $('#new_section').val(Section)
+            $('#new_DQID').html(Count + 1)
+            // Show creation modal
+            $("#creationModal").modal("show");
+        }
+
+        var ConfirmDeletion = function (DQID, QString) {
+            // Store value of section
+            $('#deletionDQID').val(DQID)
+            $('#deletingQuestion').text(QString.val())
+            // Show creation modal
+            $("#deletionModal").modal("show");
+        }
+
+
+    </script>
+}

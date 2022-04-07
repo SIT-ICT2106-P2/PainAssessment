@@ -1,0 +1,70 @@
+﻿@model PainAssessment.ViewModels.UpdateUsernameModel
+@{
+    ViewData["Title"] = "EditProfile";
+}
+    <h4>Profile</h4>
+    <hr />
+    @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post)){
+   @if (ViewData["Message"] != null)
+    {
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@ViewData["Message"]</text>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row form-group">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Name)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Name, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row form-group">
+        <div class="col-lg-2"> Username </div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.NewUserName, new {@class = "form-control"})
+        </div>
+    </div>
+    <br />
+    <div class="row form-group">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Role)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Role, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row form-group">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PriorPainEducation)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PriorPainEducation, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row form-group">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.ClinicalArea)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ClinicalArea, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row form-group">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PracticeType)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
+        </div>
+    </div>
+
+    <br />
+    <div class="flex-parent jc-center">
+        <input type="submit" class="btn btn-primary"
+        value="Submit"/>
+
+        <a href="ViewProfile"><input type="button" class="btn btn-secondary"
+        value="Cancel"/></a>
+    </div>
+    }
+

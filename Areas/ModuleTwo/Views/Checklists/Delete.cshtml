@@ -5,13 +5,10 @@
 
 
 <div class="row">
-    <div class="col sm-1 mb-3">
-        <a class="btn btn-light border border-dark" style="float:left;" asp-action="Index">Back</a>
+    <div class="col">
+        <h1 class="font-weight-bold fs-4 text">Delete</h1>
+        <h2>Checklist</h2>
     </div>
-    <div class="col lg-10">
-        <h2 class="font-weight-bold fs-4 text">Delete</h2>
-    </div>
-    <div class="col sm-1"></div>
 </div>
 
 <hr />
@@ -38,13 +35,6 @@
                 <input asp-for="ChecklistDescription" name="ChecklistDescription" class="form-control" readonly />
 
             </div>
-            <div class="form-group mt-2">
-                <div class="form-check">
-
-                    <input asp-for="Active" class="form-check-input" type="checkbox" readonly>
-                    <label asp-for="Active" class="form-check-label">Active</label>
-                </div>
-            </div>
             <h3>Central</h3>
             <div class="container rounded-lg p-0 m-0 border border-dark bg-seondary">
 
@@ -67,19 +57,12 @@
                                 Value
                             </th>
                             <!--<th style="width:75px;">-->
-                            <th style="width:10%;">
-                                <button id="addCentral" type="button" class="btn btn-sm btn-primary visible"
-                                        onclick="AddCentral(this)">
-                                    Add
-                                </button>
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @for (int i = 0; i < Model.Central.Count; i++)
                         {
                             <tr class="centralRow" id="addCentralRow-@i">
-                                >
                                 <td style="width:20%">
                                     @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Central[i].SubDomain" class="form-control" readonly />
@@ -101,16 +84,13 @@
                                     @*Html.EditorFor(x => x.Central[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Central[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
-                                <td style="width:10%">
-                                    <button id="removeCentral-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveCentral(this)">Remove</button>
-                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialCentralWeight" name="ChecklistName" class="control-label">Central Weight</label>
-                    <input asp-for="InitialCentralWeight" name="InitialCentralWeight" class="form-control" />
+                    <input asp-for="InitialCentralWeight" name="InitialCentralWeight" class="form-control" readonly/>
 
                 </div>
             </div>
@@ -138,12 +118,7 @@
                                 Value
                             </th>
                             <!--<th style="width:75px;">-->
-                            <th style="width:10%;">
-                                <button id="addRegional" type="button" class="btn btn-sm btn-primary visible"
-                                        onclick="AddRegional(this)">
-                                    Add
-                                </button>
-                            </th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -172,16 +147,13 @@
                                     @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Regional[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
-                                <td style="width: 10%;">
-                                    <button id="removeRegional-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveRegional(this)">Remove</button>
-                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialRegionalWeight" class="control-label">Regional Weight</label>
-                    <input asp-for="InitialRegionalWeight" name="InitialRegionalWeight" class="form-control" />
+                    <input asp-for="InitialRegionalWeight" name="InitialRegionalWeight" class="form-control" readonly/>
                 </div>
             </div>
 
@@ -209,12 +181,6 @@
                                 Value
                             </th>
                             <!--<th style="width:75px;">-->
-                            <th style="width:10%;">
-                                <button id="addLocal" type="button" class="btn btn-sm btn-primary visible"
-                                        onclick="AddLocal(this)">
-                                    Add
-                                </button>
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -243,28 +209,22 @@
                                     @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Local[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
-                                <td style="width: 10%;">
-                                    <button id="removeLocal-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveLocal(this)">Remove</button>
-                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialLocalWeight" class="control-label">Local Weight</label>
-                    <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" />
+                    <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" readonly/>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-primary" />
+            <div class="form-group mt-2">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a class="btn btn-secondary" asp-action="Index">Back To List</a>
             </div>
-            <input type="hidden" id="hiddenLocaLast" value="0" />
+            <input type="hidden" id="hiddenLocaLast" value="0"/>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

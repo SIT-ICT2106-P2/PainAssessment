@@ -10,6 +10,7 @@ using PainAssessment.Areas.Admin.Models;
 //using PainAssessment.Areas.ModuleTwo.Models;
 using PainAssessment.Areas.Admin.Services;
 using System.Data;
+using PainAssessment.Interfaces;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
@@ -18,34 +19,33 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     {
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
+        private readonly ILoginService loginService;
 
-        //public PatientController(IPatientService patientService)
-        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
+        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService, ILoginService loginService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
-            //log = LogService.GetInstance;
+            this.loginService = loginService;
         }
 
-        // GET: Admin/Patients
-        //public IActionResult Index()            // Will need to pass in Practitioner GUID here
-        //{
-        //    //Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
-        //    //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
-        //    //practitioner.AddPatientRelation(patient);
-        //    //practitionerService.SavePractitioner();
-        //    //return View(practitioner.Patients);
-        //    return View(patientService.GetAllPatients());
-        //}
-
+        // GET: ModuleTwo/PractPatient/
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+
+            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("a95d92f1-7845-4ac7-7cec-08da118e2549"));
+
+            //Code to get the logged in service
+            //var loginID = loginService.GetAccountId;
+
+
+            //Patient patient = patientService.GetAllPatients;
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            //IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
-            var patients = from s in patientService.GetAllPatients() select s;
+            var patients = from s in practitioner.Patients select s;
+            //var patients = from s in patientService.GetAllPatients() select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -69,11 +69,10 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                     break;
             }
 
-            //return View(await PaginatedList<Patient>.CreateAsync(patients.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(patients.ToList());
         }
 
-        // GET: Admin/Patients/Details/5
+        // GET: ModuleTwo/PractPatient/Details/5
         public IActionResult Details(Guid? id)
         {
             if (id == null)
@@ -91,7 +90,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Edit/5
+        // GET: ModuleTwo/PractPatient/Edit/5
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -107,7 +106,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // POST: Admin/Patients/Edit/5
+        // POST: ModuleTwo/PractPatient/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -125,8 +124,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                 {
                     patientService.UpdatePatient(patient);
                     patientService.SavePatient();
-                    //log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", patient.Name));
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -144,24 +141,27 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Create
+        // GET: ModuleTwo/PractPatient/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Patients/Create
+        // POST: ModuleTwo/PractPatient/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Patient patient)            // WILL NEED TO PASS IN PRACTITIONER INFO HERE
         {
+            //Code to get the logged in service
+            //var loginID = loginService.GetAccountId;
+
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
+                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("a95d92f1-7845-4ac7-7cec-08da118e2549"));
                 practitioner.AddPatientRelation(patient);
                 practitionerService.SavePractitioner();
                 return RedirectToAction(nameof(Index));
@@ -169,7 +169,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Delete/5
+        // GET: ModuleTwo/PractPatient/Delete/5
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -187,14 +187,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // POST: Admin/Patients/Delete/5
+        // POST: ModuleTwo/PractPatient/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id)
         {
             patientService.DeletePatient(id);
             patientService.SavePatient();
-            //log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,0 +1,163 @@
+﻿@model PainAssessment.ViewModels.CreateAccountModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body>
+    <div class=" container-fluid row">
+        <div class="col p-5 text-center text-3xl">
+            <h1> Create new account</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mx-auto">
+            <div class="bg-white rounded-lg shadow p-5">
+                <div class="form-group">
+                    <div class="alert alert-@ViewData["MsgType"]">
+                        <text>@ViewData["Message"]</text>
+                    </div>
+                    <form asp-controller="Account" asp-action="CreateAccount" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Username,new {@class="font-weight-bold font-italic"})
+                                <input type="text" class="form-control" id="@Html.IdFor(acc => acc.Username)" name="@Html.NameFor(acc => acc.Username)" placeholder="Enter your username" required>
+                                @Html.ValidationMessageFor(acc => acc.Username)
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Password,new {@class="font-weight-bold font-italic"})
+                                <input type="password" class="form-control" id="@Html.IdFor(acc => acc.Password)" name="@Html.NameFor(acc => acc.Password)" placeholder="Enter your password" required>
+                                @Html.ValidationMessageFor(acc => acc.Password)
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Role,new {@class="font-weight-bold font-italic"})
+                                <select id="@Html.IdFor(acc => acc.Role)" name="@Html.NameFor(acc => acc.Role)" class="form-control" asp-for="Role" required>
+                                    <option>Administrator</option>
+                                    <option>Practitioner</option>
+                                </select>
+                                @*@Html.ValidationMessageFor(acc => acc.Role)*@
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.FullName,new {@class="font-weight-bold font-italic"})
+                                <input type="text" class="form-control" id="@Html.IdFor(acc => acc.FullName)" name="@Html.NameFor(acc => acc.FullName)" placeholder="Enter your full name" required>
+                                @Html.ValidationMessageFor(acc => acc.FullName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Clinical Area</label>
+                            <select asp-for="ClinicalAreaID" class="form-control" asp-items="ViewBag.ClinicalAreaID"></select>
+                            <span asp-validation-for="ClinicalAreaID" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"> Practice Type</label>
+                            <select asp-for="PracticeTypeID" class="form-control" asp-items="ViewBag.PracticeTypeID"></select>
+                            <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
+                        </div>
+
+                        @* <div class="form-group">
+                            <div class="form-group">
+                            <label asp-for="PriorPainEducation" class="control-label">PriorPainEducation</label>
+                            @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
+                            <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
+                            </div>
+                        *@
+
+                        <div class="form-row d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary ">Submit</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+       // #1. Add modal into your view
+       // #2. Select Dropdown element
+       // #3. onChange listener => toggle modal
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial", new { area = "Admin" });
+    }
+       <script type="text/javascript">
+           var lastResults = [];
+
+           $(function () {
+               clinicalArea = $("#ClinicalAreaID").select2({
+                   tags: true,
+                   selectOnClose: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
+
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
+                   }
+               });
+
+               practiceType = $("#PracticeTypeID").select2({
+                   tags: true,
+                   selectOnClose: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
+                   }
+
+               });
+               painEducation = $("#PriorPainEducation").select2({
+                   tags: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created.`);
+                   }
+               });
+
+
+
+
+           })
+
+</script>
+
+<script>
+   $( document ).ready(function() {
+    console.log( "ready!" );
+});
+</script>

@@ -456,3 +456,6 @@ $RECYCLE.BIN/
 
 # Temporary
 Migrations/
+
+# CI Workflow
+.github

@@ -11,10 +11,13 @@ using PainAssessment.Areas.ModuleTwo.Models;
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
     [Area("ModuleTwo")]
-    public class ConsultationsController : Controller
+    public class TimelinesController : Controller
     {
-  
-        public async Task<IActionResult> Index()
+        //        private readonly ILoginService patientService;
+        //        private readonly IConsultationService consultationService;
+        //        private readonly ISessionService sessionService;
+
+        public async Task<IActionResult> Index(int id)
         {
             return View();
         }

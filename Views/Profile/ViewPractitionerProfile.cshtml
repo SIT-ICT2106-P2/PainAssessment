@@ -1,0 +1,63 @@
+﻿@model PainAssessment.ViewModels.Profile.PractionerModel
+@{
+    ViewData["Title"] = "ViewPrac";
+}
+<div>
+    <h4>Profile</h4>
+    <hr />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Name)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Name, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2">User Name</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.FullName, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Role)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Role, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PriorPainEducation)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PriorPainEducation, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.ClinicalArea)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ClinicalArea, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PracticeType)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="col-md-6">
+        <a href = "EditProfile">
+            <button type="button" class="btn btn-info col-md-6" value="Update"> Update Username </button>
+        </a>
+    </div>
+    </br>
+
+    <div class="col-md-6">
+        <a href = "UpdatePassword"><button type="button" class="btn btn-info col-md-6"
+        value="UpdatePwd"> Update Password </button></a>
+    </div>
+</div>

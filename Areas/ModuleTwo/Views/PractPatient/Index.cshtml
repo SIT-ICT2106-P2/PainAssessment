@@ -6,13 +6,9 @@
 }
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    @*<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>*@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 </head>
 
 <div class="row justify-content-between">
@@ -26,6 +22,8 @@
     </div>
 </div>
 
+@*
+    // Search function using ASP.
 <div class="d-flex-col mt-2">
     <form class="d-flex justify-content-end mb-3" method="get" asp-action="Index">
         <input class="form-control me-2"
@@ -39,8 +37,10 @@
         </button>
     </form>
     <a asp-action="Index" class="=">Clear Search</a>
-</div>
+</div>*@
 
+@*
+    // Toggle code to hide Patient Names
 <div class="row mb-3 d-flex justify-content-end">
     <div class="">
         <label class="switch">
@@ -48,9 +48,9 @@
             <span class="slider round"></span>
         </label>
     </div>
-</div>
+</div>*@
 
-<div class="d-flex-col mb-5">
+<div class="d-flex-col mb-2">
     <table class="table display" id="practPatientTable">
         <thead>
             <tr>
@@ -96,21 +96,23 @@
                     <td>
                         <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
                         <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        @*<a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <div class="mb-5 justify-content-end d-flex">
+    <div class="mt-5 justify-content-start d-flex">
         <button onclick="topFunction()" id="backToTop" title="Go to top" class="btn btn-primary">Back to top</button>
     </div>
     <br />
 </div>
 
 <script>
-        window.onload = load;
-
+        //window.onload = load;
+          $(document).ready(function () {
+             $('#practPatientTable').DataTable();
+          });
         function toggleView() {
             var checkBox = document.getElementById("toggleSwitch");
             var patientNames = document.getElementById("patientNames");
@@ -169,3 +171,4 @@
         document.documentElement.scrollTop = 0;
     }
 </script>
+

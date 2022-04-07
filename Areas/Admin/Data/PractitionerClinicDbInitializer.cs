@@ -29,6 +29,7 @@ namespace PainAssessment.Areas.Admin.Data
             new ClinicalArea("Pain Management"),
             new ClinicalArea("Intensive Care"),
             new ClinicalArea("Hand Therapy"),
+            new ClinicalArea("Research"),
             };
             context.ClinicalAreas.AddRange(clinicalArea);
 

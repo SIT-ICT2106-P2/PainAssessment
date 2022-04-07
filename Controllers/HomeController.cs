@@ -1,17 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PainAssessment.Interfaces;
 using PainAssessment.Models;
+using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace PainAssessment.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        // Include services
+        private readonly ITemplateChecklistService templateChecklistService;
+        private readonly IDefaultQuestionsService defaultQuestionsService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService)
         {
             _logger = logger;
+            this.templateChecklistService = templateChecklistService;
+            this.defaultQuestionsService = defaultQuestionsService;
         }
 
         public IActionResult Index()
@@ -23,13 +33,6 @@ namespace PainAssessment.Controllers
         {
             return View();
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
 
         public IActionResult ErrorPage(int? statusCode = null)
         {

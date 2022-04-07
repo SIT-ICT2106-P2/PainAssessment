@@ -1,0 +1,90 @@
+﻿
+@model PainAssessment.Areas.ModuleTwo.Models.Checklist
+
+@{ ViewData["Title"] = "DeleteTemplateChecklist"; }
+
+
+<div class="row justify-content-between">
+    <div class="col-sm-8">
+        <h1>Delete Template CheckList</h1>
+        <p class="text-muted">
+            Admin can delete their Template Checklist here.
+        </p>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+
+        <form id="ChecklistForm" asp-action="DeleteTemplateChecklist">
+            <input type="hidden" asp-for="ChecklistId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-2">
+                <label asp-for="ChecklistName" class="control-label">Checklist Name</label>
+                <input asp-for="ChecklistName" name="ChecklistName" class="form-control" readonly />
+            </div>
+            <div class="form-group mt-2">
+                <input type="hidden" asp-for="PractitionerId" class="form-control" value="1" />
+                <span asp-validation-for="PractitionerId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="hidden" asp-for="SessionId" name="SessionId" class="form-control" value="0" />
+                <span asp-validation-for="SessionId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ChecklistDescription" class="control-label">Checklist Description</label>
+                <textarea asp-for="ChecklistDescription" name="ChecklistDescription" class="form-control" rows="5" readonly></textarea>          
+            </div>
+            <div class="form-group mt-2">
+                <div class="form-check">
+                    <input asp-for="Active" class="form-check-input" type="checkbox" readonly>
+                    <label asp-for="Active" class="form-check-label">Active</label>
+                </div>
+            </div>
+
+            @for (int i = 0; i < Model.Central.Count; i++)
+            {
+
+                <input type="hidden" asp-for="@Model.Central[i].IsCentralDeleted" />
+
+            }
+            <input type="hidden" id="hiddenCentralLast" value="0" />
+
+
+            @for (int i = 0; i < Model.Regional.Count; i++)
+            {
+
+                <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
+
+            }
+
+
+            <input type="hidden" id="hiddenRegionalLast" value="0" />
+
+
+            @for (int i = 0; i < Model.Local.Count; i++)
+            {
+
+
+                <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Confirm Delete" class="btn btn-primary" />
+            </div>
+            <input type="hidden" id="hiddenLocaLast" value="0" />
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" style="padding-top: 30px">
+        <a class="btn btn-danger border border-dark" style="float:right;" asp-action="ViewTemplateChecklist">Back</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+

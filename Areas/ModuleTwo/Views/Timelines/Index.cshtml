@@ -1,0 +1,65 @@
+﻿@*@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Timeline>*@
+@*@model PainAssessment.Areas.Admin.Models.Patient*@
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<h1>Consultation Sessions</h1>
+<p class="text-muted">Patient @(ViewContext.RouteData.Values["id"])</p>
+
+@*<p>
+  <a class="btn btn-primary btn-sm" role="button" asp-action="Create">Create New</a>
+</p>*@
+<table class="table table-bordered">
+    <thead>
+        <tr class="warning">
+            <th>
+                Session No.
+                @*@Html.DisplayNameFor(model => model.sessionId)*@
+            </th>
+            <th>
+                Visit Date
+                @*@Html.DisplayNameFor(model => model.createdAt)*@
+            </th>
+            <th>
+                Memo
+                @*@Html.DisplayNameFor(model => model.memo)*@
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@*@foreach (var item in Model)*@
+@*{*@
+        <tr>
+            <td>
+                Session 1
+            </td>
+            <td>
+                1/1/2022
+            </td>
+            <td>Patient is severely injured. Estimated recovery time 6-8 months</td>
+            <tr>
+            <td>
+                Session 2
+            </td>
+            <td>
+                11/2/2022
+            </td>
+            <td>Inflammation is recovering. Estimated recovery time 4 months</td>
+            </tr>
+    @*        <td>
+                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>*@
+        </tr>
+@*}*@
+    </tbody>
+</table>
+@*<a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Back to Patient Records</a>*@
+<a type="button" class="btn btn-secondary btn-sm" asp-controller="PractPatient" asp-action="Details" asp-route-id="@(ViewContext.RouteData.Values["id"])">Back to Patient Details</a>

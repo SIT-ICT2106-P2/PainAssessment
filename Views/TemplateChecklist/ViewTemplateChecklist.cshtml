@@ -1,0 +1,77 @@
+﻿@using PainAssessment.Areas.ModuleTwo.Services
+@using System.Collections.ObjectModel
+@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
+
+@{
+    ViewData["Title"] = "ViewTemplateChecklist";
+}
+<div class="row justify-content-between">
+    <div class="col-sm-6">
+        <h1>Administrator CheckLists</h1>
+        <p class="text-muted">Admin can view and manage Template Checklist here. <br>
+        This includes create, update and delete of template checklists.</p>
+    </div>
+    <div class="col-sm-2 align-self-center">
+        <a asp-action="CreateTemplateChecklist" type="button" class="btn btn-primary btn-block">Create New</a>
+    </div>
+</div>
+<div class="row">
+    <table class="table border border-dark rounded-lg ">
+        <thead>
+            <tr>
+                <th>
+                    CheckList Name
+                </th>
+                <th>
+                    CheckList Description
+                </th>
+
+                <th>
+                    Status
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistDescription)
+                    </td>
+
+                    <td>
+                        @*@Html.RadioButtonFor(modelItem => item.Active, item) @item*@
+                        <!-- post method to call the adapter created -->
+                        @using (Html.BeginForm("Update", "TemplateChecklist", FormMethod.Post))
+                        {
+                            @Html.Hidden("checklistID", item.ChecklistId)
+                            @if (item.Active)
+                            {
+                                <input type="submit" class="btn btn-success" id="btUpdate" value="Active">
+                            }
+                            else
+                            {
+                                <input type="submit" class="btn btn-danger" id="btUpdate" value="InActive">
+                            }
+                        }
+                    </td>
+                    <td>
+                        <!-- buttons to call the create, edit, delete function of template checklist-->
+                        <a class="btn btn-primary" asp-action="ManageTemplateChecklist" asp-route-id="@item.ChecklistId">Manage Questions</a>
+                        <a class="btn btn-secondary" asp-action="EditTemplateChecklist" asp-route-id="@item.ChecklistId">Edit</a>
+                        <a class="btn btn-danger" asp-action="DeleteTemplateChecklist" asp-route-id="@item.ChecklistId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+

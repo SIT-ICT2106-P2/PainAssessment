@@ -5,13 +5,10 @@
 
 
 <div class="row">
-    <div class="col sm-1 mb-3">
-        <a class="btn btn-light border border-dark" style="float:left;" asp-action="Index">Back</a>
+    <div class="col">
+        <h1 class="font-weight-bold fs-4 text">Details</h1>
+        <h2>Checklist</h2>
     </div>
-    <div class="col lg-10">
-        <h2 class="font-weight-bold fs-4 text">Details</h2>
-    </div>
-    <div class="col sm-1"></div>
 </div>
 
 <hr />
@@ -36,13 +33,6 @@
                 <label asp-for="ChecklistDescription" class="control-label">Checklist Description</label>
                 <input asp-for="ChecklistDescription" name="ChecklistDescription" class="form-control" readonly />
 
-            </div>
-            <div class="form-group mt-2">
-                <div class="form-check">
-
-                    <input asp-for="Active" class="form-check-input" type="checkbox" readonly>
-                    <label asp-for="Active" class="form-check-label">Active</label>
-                </div>
             </div>
             <h3>Central</h3>
             <div class="container rounded-lg p-0 m-0 border border-dark bg-seondary">
@@ -72,7 +62,6 @@
                         @for (int i = 0; i < Model.Central.Count; i++)
                         {
                             <tr class="centralRow" id="addCentralRow-@i">
-                                >
                                 <td style="width:20%">
                                     @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Central[i].SubDomain" class="form-control" readonly />
@@ -88,7 +77,7 @@
                                 </td>
                                 <td style="width:10%">
                                     @*Html.EditorFor(x => x.Central[i].MaxValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].MaxValue" min="0" class="form-control" readonly />
+                                    <input asp-for="@Model.Central[i].MaxValue" min="0" class="form-control" readonly/>
                                 </td>
                                 <td style="width:10%">
                                     @*Html.EditorFor(x => x.Central[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -100,7 +89,7 @@
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialCentralWeight" name="ChecklistName" class="control-label">Central Weight</label>
-                    <input asp-for="InitialCentralWeight" name="InitialCentralWeight" class="form-control" />
+                    <input asp-for="InitialCentralWeight" name="InitialCentralWeight" class="form-control" readonly/>
 
                 </div>
             </div>
@@ -162,7 +151,7 @@
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialRegionalWeight" class="control-label">Regional Weight</label>
-                    <input asp-for="InitialRegionalWeight" name="InitialRegionalWeight" class="form-control" />
+                    <input asp-for="InitialRegionalWeight" name="InitialRegionalWeight" class="form-control" readonly/>
                 </div>
             </div>
 
@@ -224,16 +213,18 @@
                 </table>
                 <div class="form-group mt-2">
                     <label asp-for="InitialLocalWeight" class="control-label">Local Weight</label>
-                    <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" />
+                    <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" readonly/>
                 </div>
             </div>
-
+            <div class="form-group mt-2">
+                <a class="btn btn-secondary" asp-action="Index">Back To List</a>
+            </div>
             <input type="hidden" id="hiddenLocaLast" value="0" />
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    
 </div>
 
