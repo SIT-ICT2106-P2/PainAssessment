@@ -1,13 +1,18 @@
 ﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
+using PainAssessment.Interfaces;
+using PainAssessment.Models;
 using System;
 using System.Linq;
+using BC = BCrypt.Net.BCrypt;
 
 
 namespace PainAssessment.Areas.Admin.Data
 {
     public static class PractitionerClinicDbInitializer
     {
+        private static readonly IUnitOfWork unitOfWork;
         public static void Initialize(HospitalContext context)
         {
 
@@ -127,11 +132,39 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.Patients.AddRange(patients);
             context.SaveChanges();
-            
-            for(int i = 0; i < practitioners.Length; i++)
+
+            for (int i = 0; i < practitioners.Length; i++)
             {
                 practitioners[i].AddPatientRelation(patients[i]);
             }
+            context.SaveChanges();
+
+            var prac = new Practitioner("Test", "1 years ", "3,4", 10, 1);
+            context.Practitioners.Add(prac);
+            context.SaveChanges();
+
+            Guid[] accid = new Guid[]
+            {
+                Guid.NewGuid(),
+                 Guid.NewGuid(),
+            };
+
+            Account[] account = new Account[]
+           {
+                new Account(accid[0], "Abby", BC.HashPassword("123123"), "active", "Administrator", DateTime.Now,  true),
+                new Account(accid[1], "Bob", BC.HashPassword("123123"), "active", "Administrator", DateTime.Now,  true),
+                new Account(prac.Id, "Cindy", BC.HashPassword("123123"), "active", "Practitioner", DateTime.Now,  true),
+           };
+
+            context.Accounts.AddRange(account);
+            context.SaveChanges();
+
+            Administrator[] admin = new Administrator[]
+            {
+                new Administrator("Abby", "Abby", "5", 1,accid[0]),
+                new Administrator("Bob", "Bob", "10", 2, accid[1]),
+            };
+            context.Administrators.AddRange(admin);
             context.SaveChanges();
 
         }

@@ -51,8 +51,7 @@ namespace PainAssessment.Areas.Admin.Models.Builder
             {
                 throw new ArgumentException("Parameter cannot be null", nameof(name));
             }
-
-            if (experience == default)
+            if (String.IsNullOrEmpty(experience))
             {
                 throw new ArgumentException("Parameter cannot be null", nameof(experience));
             }

@@ -133,6 +133,9 @@ namespace PainAssessment.Controllers
         {
             if (ModelState.IsValid)
             {
+                ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+                ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+                ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
                 if (accountService.CheckUsername(model.Username).Equals(false))
                 {
                     var AccountId = Guid.NewGuid();
@@ -163,10 +166,19 @@ namespace PainAssessment.Controllers
                                 Experience = 0
                             };*/
 
-                            Administrator admin = new Administrator(
+                            /*Administrator admin = new Administrator(
                                 model.FullName, model.Username,  "0", model.ClinicalAreaID, AccountId);
                             administratorService.CreateAdmin(admin);
 
+                        }*/
+
+                            IAdminBuilder adminBuilder = new AdminBuilder().WithFullName(model.FullName)
+                                                                                   .WithName(model.Username)
+                                                                                   .WithExperience("0")
+                                                                                   .WithClinic(model.ClinicalAreaID)
+                                                                                   .WithId(AccountId);
+                            Administrator admin = adminBuilder.Build();
+                            administratorService.CreateAdmin(admin);
                         }
                         else if (account.Role == "Practitioner")
                         {
