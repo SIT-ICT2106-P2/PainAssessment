@@ -18,5 +18,21 @@ namespace PainAssessment.Models
         public DateTime CreatedAt { get; set; }
         public bool FirstSignIn { get; set; }
 
+        public Account(Guid AccountId, string Username, string Password, string AccountStatus, string Role, DateTime CreatedAt, bool FirstSignIn)
+        {
+            this.AccountId = AccountId;
+            this.Username = Username;
+            this.Password = Password;
+            this.AccountStatus = AccountStatus;
+            this.Role = Role;
+            this.CreatedAt = CreatedAt;
+            this.FirstSignIn = FirstSignIn;
+        }
+
+
+        public Account()
+        {
+        }
+
     }
 }

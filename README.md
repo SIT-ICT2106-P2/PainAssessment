@@ -41,3 +41,13 @@ For more information, read [Database Migration](https://docs.microsoft.com/en-us
 > Note: Migration folder is .gitignored.
 >
 > For any subsequent setup for database, delete the Migrations folder generated from ef migrations, and delete the database from your local mysql server. Then repeat the `migrations add InitialCreate` and `database update` commands.
+
+### Accounts to Log In
+Administrator 1 Username: "Abby"
+Password: 123123
+
+Administrator 2 Username: "Bob"
+Password: 123123
+
+Practitioner Username: "Cindy"
+Password: 123123
